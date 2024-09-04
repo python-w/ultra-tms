@@ -1,8 +1,6 @@
 import * as React from "react";
 import { createBrowserRouter } from "react-router-dom";
 import CustomDrawer from "../components/Navigation/CustomDrawer";
-// import ClubSetup from '../pages/ClubSetup'
-// import RaceSession from "../pages/RaceSession";
 import FirstSubItem from '../pages/MainSetup';
 
 const UTRouter = createBrowserRouter([
@@ -16,7 +14,7 @@ const UTRouter = createBrowserRouter([
       },
       {
         path: "/fm-second-sub-item",
-        // element: <ClubSetup />,
+        element: <FirstSubItem />,
       },
     ],
   },

@@ -13,6 +13,8 @@ const Times = styled(Button)`
     cursor: pointer;
     padding: 0;
     min-width: 40px;
+    position: absolute;
+    right: 15px;
     @media (min-width: ${mediaQueries.xxxl}px) {
       padding: 0;
       min-width: ${get4k(40)};

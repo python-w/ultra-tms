@@ -213,44 +213,6 @@ const CustomTheme = createTheme({
         },
       },
     },
-    MuiSelect: {
-      styleOverrides: {
-        root: {
-          height: 40,
-          fontSize: "16px",
-          width: "100%",
-          borderRadius: "12px",
-          border: "1px solid var(--border-color)",
-          color: "var(--body-text-color)",
-          background: "#fff",
-          "@media (min-width: 2201px)": {
-            height: get4k(40),
-            fontSize: get4k(16),
-            borderRadius: get4k(12),
-          },
-        },
-        nativeInput: {
-          position: "absolute !important",
-        },
-      },
-    },
-    MuiInputBase: {
-      styleOverrides: {
-        root: {
-          "& .MuiOutlinedInput-notchedOutline": {
-            border: 0,
-          },
-          "&:hover .MuiOutlinedInput-notchedOutline": {
-            borderColor: "inherit",
-          },
-          "&.Mui-focused": {
-            borderRadius: get4k(12),
-            borderColor: "var(--primary-color)",
-            boxShadow: "0 0 0 2px rgba(53, 109, 173, 0.2)",
-          },
-        },
-      },
-    },
     MuiButton: {
       styleOverrides: {
         root: {
@@ -295,10 +257,6 @@ const CustomTheme = createTheme({
         paper: {
           border: "none",
           background: "transparent",
-          // backgroundImage: 'linear-gradient(#356DAD, transparent)',
-          // backgroundColor: "#1D518D",
-          // color: "#fff",
-          // border: 'none',
         },
       },
     },
@@ -307,32 +265,9 @@ const CustomTheme = createTheme({
         root: {
           "&::-webkit-scrollbar-thumb": {
             backgroundColor: "transparent",
-            // borderColor: 'transparent',
           },
           "&:hover::-webkit-scrollbar-thumb": {
             backgroundColor: "rgba(29, 81, 141, 0.5)",
-            // borderColor: "rgba(29, 81, 141, 0.5)",
-          },
-        },
-      },
-    },
-    MuiFormLabel: {
-      styleOverrides: {
-        root: {
-          fontSize: 14,
-          display: "block",
-          fontWeight: "bold",
-          color: "var(--body-text-color)",
-          marginBottom: "8px",
-          textTransform: "uppercase",
-          "@media (min-width: 2201px)": {
-            fontSize: get4k(14),
-          },
-          "& .required": {
-            color: "red",
-            display: "inline-block",
-            marginLeft: "8px",
-            fontWeight: 700,
           },
         },
       },

@@ -93,7 +93,7 @@ const LogoBgStyled = styledC.div`
   },
 `;
 
-const StyledClubLogoIcon = styled("img")(({ theme }) => ({
+const StyledCLogoIcon = styled("img")(({ theme }) => ({
   width: 48,
   height: 48,
   objectFit: 'contain',
@@ -103,7 +103,7 @@ const StyledClubLogoIcon = styled("img")(({ theme }) => ({
   }
 }));
 
-const StyledClubLogo = styled("img")(({ theme }) => ({
+const StyledCLogo = styled("img")(({ theme }) => ({
   width: 'auto',
   height: '48px',
   objectFit: 'contain',
@@ -118,6 +118,7 @@ const StyledClubLogo = styled("img")(({ theme }) => ({
 
 const MiniDrawer = () => {
   const theme = useTheme();
+  const location = useLocation();
 
   const isBelowXlBreakpoint = useMediaQuery(theme.breakpoints.down("xl"));
   const isBelowLgBreakpoint = useMediaQuery(theme.breakpoints.down("lg"));
@@ -129,8 +130,6 @@ const MiniDrawer = () => {
     alignItems: "center",
     justifyContent: "flex-end",
     padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
-    // ...theme.mixins.toolbar,
     minHeight: 80,
     [theme.breakpoints.up("xxxl")]: {
       minHeight: get4k(80)
@@ -181,12 +180,10 @@ const MiniDrawer = () => {
   ];
 
   function CheckIfActive(menuItem) {
-    const location = useLocation();
     return menuItem.children.some((child) => child.path === location.pathname);
   }
 
   function CheckIfActiveChild(menuItemChild) {
-    const location = useLocation();
     return menuItemChild.path === location.pathname;
   }
 
@@ -220,10 +217,10 @@ const MiniDrawer = () => {
           >
             <Box sx={{ backgroundColor: "white", width: isDrawerOpen ? 232 : 88, height: 84, borderRadius: isDrawerOpen ? "0 0 30px 30px" : "0 0 25px 25px", display: "flex", alignItems: "center", justifyContent: "center", padding: 2, position: "relative", [theme.breakpoints.up("xxxl")]: { width: isDrawerOpen ? get4k(232) : get4k(88), height: get4k(84), borderRadius: isDrawerOpen ? `0 0 ${get4k(30)} ${get4k(30)}` : `0 0 ${get4k(25)} ${get4k(25)}`, padding: get4k(16) } }}>
               {!isDrawerOpen ? (
-                <StyledClubLogoIcon src={ClubLogoIcon} width={48} height={48} alt="Club Logo Icon" />
+                <StyledCLogoIcon src={ClubLogoIcon} width={48} height={48} alt="Club Logo Icon" />
               ) : (
                 <>
-                  <StyledClubLogo src={ClubLogo} width={204} height={52} alt="Club Logo" />
+                  <StyledCLogo src={ClubLogo} width={204} height={52} alt="Club Logo" />
                   <LogoBgStyled>
                     <img src={UnionBg} width={86} height={69} className="logoBg" alt="Logo Area Style" />
                   </LogoBgStyled>

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { styled, Paper, Grid2, Avatar, Typography, List, ListItem, ListItemText, ListItemAvatar, IconButton, Menu, MenuItem, alpha, Divider } from "@mui/material";
 import ButtonPrimary from "../ui/ButtonPrimary";
-import { MoreVert, Edit, Delete, Flag } from "@mui/icons-material";
+import { MoreVert, Edit, Delete, Flag, Summarize } from "@mui/icons-material";
 import ExpandedView from "./ExpandView";
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -21,39 +21,36 @@ const StyledMenu = styled((props) => (
   <Menu
     elevation={0}
     anchorOrigin={{
-      vertical: 'bottom',
-      horizontal: 'right',
+      vertical: "bottom",
+      horizontal: "right",
     }}
     transformOrigin={{
-      vertical: 'top',
-      horizontal: 'right',
+      vertical: "top",
+      horizontal: "right",
     }}
     {...props}
   />
 ))(({ theme }) => ({
-  '& .MuiPaper-root': {
+  "& .MuiPaper-root": {
     borderRadius: 6,
     marginTop: theme.spacing(1),
     minWidth: 180,
-    color: 'rgb(55, 65, 81)',
-    border: '1px solid #cecece',
-    '& .MuiMenu-list': {
-      padding: '4px 0',
+    color: "rgb(55, 65, 81)",
+    border: "1px solid #cecece",
+    "& .MuiMenu-list": {
+      padding: "4px 0",
     },
-    '& .MuiMenuItem-root': {
-      '& .MuiSvgIcon-root': {
+    "& .MuiMenuItem-root": {
+      "& .MuiSvgIcon-root": {
         fontSize: 18,
         color: theme.palette.text.secondary,
         marginRight: theme.spacing(1.5),
       },
-      '&:active': {
-        backgroundColor: alpha(
-          theme.palette.primary.main,
-          theme.palette.action.selectedOpacity,
-        ),
+      "&:active": {
+        backgroundColor: alpha(theme.palette.primary.main, theme.palette.action.selectedOpacity),
       },
     },
-    ...theme.applyStyles('dark', {
+    ...theme.applyStyles("dark", {
       color: theme.palette.grey[300],
     }),
   },
@@ -65,6 +62,7 @@ export default function TileView({ students }) {
   const [visibleStudents, setVisibleStudents] = useState(24);
 
   const handleTileBunClick = (event, index) => {
+    event.stopPropagation();
     setAnchorEl((prevAnchorEl) => {
       prevAnchorEl[index] = event.currentTarget;
       return [...prevAnchorEl];
@@ -74,7 +72,15 @@ export default function TileView({ students }) {
   const handleExpandClick = (index) => {
     setTileExpand((prevTileExpand) => {
       const newTileExpanded = [...prevTileExpand];
-      newTileExpanded[index] = !newTileExpanded[index];
+      newTileExpanded[index] = true;
+      return newTileExpanded;
+    });
+  };
+
+  const handleExpandClose = (index) => {
+    setTileExpand((prevTileExpand) => {
+      const newTileExpanded = [...prevTileExpand];
+      newTileExpanded[index] = false;
       return newTileExpanded;
     });
   };
@@ -91,9 +97,9 @@ export default function TileView({ students }) {
   };
 
   return (
-    <Grid2 container spacing={2}>
+    <Grid2 container spacing={2} columns={{ xs: 2, sm: 6, lg: 9, xl: 12 }}>
       {students.slice(0, visibleStudents).map((student, index) => (
-        <Grid2 size={3} key={student.id} onClick={() => handleExpandClick(index)}>
+        <Grid2 size={3} key={student.id}>
           <Item>
             <List sx={{ width: "100%", bgcolor: "background.paper" }} disablePadding>
               <ListItem alignItems="flex-start" disablePadding>
@@ -101,17 +107,28 @@ export default function TileView({ students }) {
                   <Avatar alt={student.name} src={student.image} sx={{ width: 56, height: 56 }} />
                 </ListItemAvatar>
                 <ListItemText
-                  primary={student.name}
+                  primary={
+                    <>
+                      <Typography component="h2" variant="h2" sx={{ color: "var(--body-text-color)", display: "inline" }}>
+                        {student.name}
+                      </Typography>
+                    </>
+                  }
                   secondary={
                     <>
-                      <Typography component="span" variant="body2" sx={{ color: "text.primary", display: "inline" }}>
+                      <Typography component="span" variant="body2" sx={{ color: "var(--body-text-color)", display: "inline" }}>
                         {student.gender}, {student.age}
                       </Typography>
-                      {" - "} {student.address.country}
+                      <Typography component="span" variant="body2" sx={{ color: "var(--body-text-color)", display: "inline" }}>
+                        {" - "} {student.address.country}
+                      </Typography>
                     </>
                   }
                 />
-                <IconButton aria-label="settings" onClick={(event) => handleTileBunClick(event, index)}>
+                <IconButton aria-label="expand-view" onClick={() => handleExpandClick(index)}>
+                  <Summarize />
+                </IconButton>
+                <IconButton aria-label="more-options" onClick={(event) => handleTileBunClick(event, index)}>
                   <MoreVert />
                 </IconButton>
                 <StyledMenu
@@ -140,12 +157,12 @@ export default function TileView({ students }) {
                 </StyledMenu>
               </ListItem>
             </List>
-            <ExpandedView student={student} open={tileExpand[index]} onClose={() => handleExpandClick(index)} />
           </Item>
+          <ExpandedView student={student} open={tileExpand[index]} onClose={() => handleExpandClose(index)} />
         </Grid2>
       ))}
       {visibleStudents < students.length && (
-        <Grid2 size={12} sx={{ textAlign: 'right' }}>
+        <Grid2 size={12} sx={{ textAlign: "right" }}>
           <ButtonPrimary variant="contained" onClick={handleLoadMore}>
             Load More
           </ButtonPrimary>

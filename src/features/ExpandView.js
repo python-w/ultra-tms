@@ -18,11 +18,14 @@ const style = {
   px: 4,
   pb: 3,
 };
-export default function ExpandedView({ student, open, onClose }) {
+export default function ExpandedView({ student, open = false, onClose }) {
   const theme = useTheme();
   return (
-    <Modal open={open} onClose={onClose} aria-labelledby="expanded-view-modal" aria-describedby="expanded-view-modal-description">
-      <Box sx={style}>
+    <Modal open={open} onClose={onClose} aria-labelledby="expanded-view-modal" aria-describedby="expanded-view-modal-description" BackdropProps={{
+      onClick: onClose,
+    }}>
+      <Box sx={style} onClick={(e) => e.stopPropagation()}>
+        <TimesButton onClick={onClose}/>
         <Box sx={{ display: "flex", flexDirection: "column" }}>
           <Avatar sx={{ width: 150, height: 150 }} alt={student.name} src={student.image} />
           <h2>{student.name}</h2>
@@ -94,7 +97,6 @@ export default function ExpandedView({ student, open, onClose }) {
             </Box>
           </Box>
         </Box>
-        <ButtonPrimary>Back to tile view</ButtonPrimary>
       </Box>
     </Modal>
   );

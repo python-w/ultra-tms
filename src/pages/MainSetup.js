@@ -29,7 +29,7 @@ export default function MainSetup() {
   };
 
   return (
-    <Box className="main_view">
+    <Box className="main_view" sx={{width: "calc(100% - 121px)"}}>
       <DrawerHeader />
       <Box className="page_outer">
         <PageHeader title="First Sub Item" hasBtn={true} icon={<ListViewIcon />} icon1={<GridViewIcon />} titletxt="tile" titletxt1="grid" handlePageView={(view) => handlePageView(view)} />
